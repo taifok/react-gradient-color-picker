@@ -19,14 +19,19 @@ const GradientBar = () => {
   }
 
   const handleMove = (e) => {
-    const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX
+    let result;
+    if (typeof e.pageX !== 'number') {
+      const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX
 
-    const left = x - (barRef.current.getBoundingClientRect().left + window.pageXOffset)
-
-    let result = Math.round(left/barRef.current.getBoundingClientRect().width * 100);
-
-    result = result > 100 ? 100 : result;
-    result = result < 0 ? 0 : result;
+      const left = x - (barRef.current.getBoundingClientRect().left + window.pageXOffset)
+  
+      result = Math.round(left/barRef.current.getBoundingClientRect().width * 100);
+  
+      result = result > 100 ? 100 : result;
+      result = result < 0 ? 0 : result;
+    } else {
+      result = getHandleValue(e);
+    }
 
     if (dragging) {
       handleGradient(currentColor, result);
