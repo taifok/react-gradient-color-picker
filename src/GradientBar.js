@@ -25,8 +25,14 @@ const GradientBar = () => {
 
   return(
     <div className='bar-wrap' onMouseEnter={stopDragging} onMouseLeave={stopDragging}>
-      <div className='ps-rl bar-wrap-inner' onMouseUp={stopDragging}>
-        <div onMouseDown={(e) => handleDown(e)} onMouseMove={(e) => handleMove(e)} style={{paddingTop: 6, paddingBottom: 6}}>
+      <div className='ps-rl bar-wrap-inner' onMouseUp={stopDragging} onTouchEnd={stopDragging}>
+        <div
+          onMouseDown={(e) => handleDown(e)}
+          onMouseMove={(e) => handleMove(e)}
+          style={{paddingTop: 6, paddingBottom: 6}}
+          onTouchStart={(e) => handleDown(e)}
+          onTouchMove={(e) => handleMove(e)}
+        >
           <div style={{width: 294, height: 14, backgroundImage: value, borderRadius: 10}} />
         </div>
         {colors?.map((c, i) => (<Handle left={c.left} key={`${i}-${c}`} i={i} setDragging={setDragging} />))}

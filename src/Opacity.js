@@ -29,8 +29,13 @@ const Opacity = () => {
 
   return(
     <div className='bar-wrap' onMouseEnter={stopDragging} onMouseLeave={stopDragging} style={{marginTop: 6}}>
-      <div className='bar-wrap-inner' onMouseUp={stopDragging}>
-        <div className='c-resize ps-rl' onMouseDown={handleDown} onMouseMove={(e) => handleMove(e)}>
+      <div className='bar-wrap-inner' onMouseUp={stopDragging} onTouchEnd={stopDragging}>
+        <div className='c-resize ps-rl'
+          onMouseDown={handleDown}
+          onMouseMove={(e) => handleMove(e)}
+          onTouchStart={handleDown}
+          onTouchMove={handleMove}
+        >
           <div style={{left: 276 * opacity, top: -2}} className='handle' />
           <div className='opacity-overlay' style={{background: bg}} onClick={(e) => handleClick(e)} />
           <OpacityBg />

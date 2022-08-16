@@ -31,11 +31,19 @@ const Square = () => {
     }
   }
 
+  const handleDown = () => setDragging(true)
+
   return (
     <div className='ps-rl'>
       <div style={{position: 'absolute', left: -7, top: -7, width: 308, height: 308}} onMouseEnter={stopDragging} />
-      <div className='ps-rl c-cross' onMouseMove={(e) => handleMove(e)} onMouseUp={stopDragging}>
-        <div style={{left: x, top: y}} className='handle' onMouseDown={() => setDragging(true)} />
+      <div className='ps-rl c-cross' onMouseMove={(e) => handleMove(e)} onMouseUp={stopDragging}
+        onTouchMove={handleMove}
+        onTouchEnd={stopDragging}
+      >
+        <div style={{left: x, top: y}} className='handle' onMouseDown={handleDown}
+            onTouchStart={handleDown}
+            
+        />
         <div className='canvas-wrapper' onClick={(e) => handleClick(e)}>
           <canvas ref={canvas} width='294px' height='294px' id='paintSquare' />
         </div>

@@ -66,11 +66,21 @@ const AdvBar = ({ left, callback, reffy }) => {
     }
   }
 
+  const handleStart = () => setDragging(true)
+
   return(
     <div className='bar-wrap' onMouseEnter={stopDragging} onMouseLeave={stopDragging}>
-      <div className='ps-rl bar-wrap-inner' onMouseUp={stopDragging}>
-        <div className='c-resize ps-rl' onMouseMove={(e) => handleMove(e)} style={{width: 294, height: 14, borderRadius: 10}}>
-          <div style={{left: left, top: -0.5}} className='handle' onMouseDown={() => setDragging(true)} />
+      <div
+        className='ps-rl bar-wrap-inner'
+        onMouseUp={stopDragging}
+        onTouchEnd={stopDragging}
+      >
+        <div className='c-resize ps-rl'
+          onMouseMove={handleMove}
+          onTouchMove={handleMove}
+          style={{width: 294, height: 14, borderRadius: 10}}
+        >
+          <div style={{left: left, top: -0.5}} className='handle' onMouseDown={handleStart} onTouchStart={handleStart} />
           <canvas ref={reffy} width='294px' height='14px' style={{position: 'relative', borderRadius: 14}} onClick={(e) => handleClick(e)} />
         </div>
       </div>

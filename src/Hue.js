@@ -34,12 +34,13 @@ const Hue = () => {
       onMouseEnter={stopDragging}
       onMouseLeave={stopDragging}
     >
-      <div className="ps-rl bar-wrap-inner" onMouseUp={stopDragging}>
+      <div className="ps-rl bar-wrap-inner" onMouseUp={stopDragging} onTouchEnd={stopDragging}>
         <div className="c-resize ps-rl" onMouseMove={e => handleMove(e)}>
           <div
             style={{ left: internalHue * 0.766666666666667, top: 2 }}
             className="handle"
             onMouseDown={handleDown}
+            onTouchStart={handleDown}
           />
           <canvas
             ref={barRef}
