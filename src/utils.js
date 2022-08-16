@@ -5,8 +5,10 @@ var tc = require("tinycolor2");
 const { squareSize, barSize, crossSize } = config
 
 export function getHandleValue(e) {
+  const clientX = e.clientX ? e.clientX : e.touches[0].clientX;
+
   const { offsetLeft } = safeBounds(e);
-  let pos = e.clientX - offsetLeft - barSize / 2;
+  let pos = clientX - offsetLeft - barSize / 2;
   let bounded = formatInputValues(pos, 0, 276)
   return Math.round(bounded / 2.76)
 }
@@ -25,11 +27,13 @@ export function computeSquareXY(hsl) {
 export function computePickerPosition(e) {
   const { offsetLeft, offsetTop } = safeBounds(e)
   const getX = () => {
-    let xPos = e.clientX - offsetLeft - crossSize / 2
+    const clientX = e.clientX ? e.clientX : e.touches[0].clientX;
+    let xPos = clientX - offsetLeft - crossSize / 2
     return formatInputValues(xPos, -8, 284)
   }
   const getY = () => {
-    let yPos = e.clientY - offsetTop - crossSize / 2
+    const clientY = e.clientY ? e.clientY : e.touches[0].clientY;
+    let yPos = clientY - offsetTop - crossSize / 2
     return formatInputValues(yPos, -8, 284)
   }
 

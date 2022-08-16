@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { getHandleValue } from './utils';
 import { usePicker } from "./context";
 import PropTypes from 'prop-types'
@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 const GradientBar = () => {
   const { currentColor, addPoint, colors, value, handleGradient } = usePicker()
   const [dragging, setDragging] = useState(false)
+  const barRef = useRef(null);
 
   const stopDragging = () => {
     setDragging(false)
@@ -18,8 +19,17 @@ const GradientBar = () => {
   }
 
   const handleMove = (e) => {
+    const x = typeof e.pageX === 'number' ? e.pageX : e.touches[0].pageX
+
+    const left = x - (barRef.current.getBoundingClientRect().left + window.pageXOffset)
+
+    let result = Math.round(left/barRef.current.getBoundingClientRect().width * 100);
+
+    result = result > 100 ? 100 : result;
+    result = result < 0 ? 0 : result;
+
     if (dragging) {
-      handleGradient(currentColor, getHandleValue(e))
+      handleGradient(currentColor, result);
     }
   }
 
@@ -30,12 +40,12 @@ const GradientBar = () => {
           onMouseDown={(e) => handleDown(e)}
           onMouseMove={(e) => handleMove(e)}
           style={{paddingTop: 6, paddingBottom: 6}}
-          onTouchStart={(e) => handleDown(e)}
+          // onTouchStart={(e) => handleDown(e)}
           onTouchMove={(e) => handleMove(e)}
         >
-          <div style={{width: 294, height: 14, backgroundImage: value, borderRadius: 10}} />
+          <div style={{width: 294, height: 14, backgroundImage: value, borderRadius: 10}} ref={barRef} />
         </div>
-        {colors?.map((c, i) => (<Handle left={c.left} key={`${i}-${c}`} i={i} setDragging={setDragging} />))}
+        {colors?.map((c, i) => (<Handle left={c.left} key={`${i}-${c}`} i={i} setDragging={setDragging} handleMove={handleMove} />))}
       </div>
     </div>
   )
@@ -43,7 +53,7 @@ const GradientBar = () => {
 
 export default GradientBar
 
-export const Handle = ({ left, i, setDragging }) => {
+export const Handle = ({ left, i, setDragging, handleMove}) => {
   const { setSelectedColor, selectedColor } = usePicker();
   const isSelected = selectedColor === i
 
@@ -54,7 +64,12 @@ export const Handle = ({ left, i, setDragging }) => {
   }
 
   return(
-    <div style={{left: left * 2.76 + 13 }} onMouseDown={(e) => handleDown(e)} className='gradient-handle-wrap'>
+    <div style={{left: left * 2.76 + 13 }}
+      onMouseDown={(e) => handleDown(e)}
+      onTouchStart={(e) => handleDown(e)}
+      onTouchMove={handleMove}
+      className='gradient-handle-wrap'
+    >
       <div style={handleStyle(isSelected)} className='gradient-handle df jc ac'>{isSelected && <div style={{width: 5, height:5, borderRadius: '50%', background: 'white'}} />}</div>
     </div>
   )

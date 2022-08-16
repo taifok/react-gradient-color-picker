@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "prepack": "yarn build",
-    "build": "babel src --out-dir lib --copy-files"
+    "build": "babel src --out-dir lib --copy-files",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,18 @@
     "@babel/cli": "^7.17.3",
     "@babel/core": "^7.17.4",
     "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7"
+    "@babel/preset-react": "^7.16.7",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack4": "^6.5.10",
+    "@storybook/manager-webpack4": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-loader": "^8.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "license": "MIT",
   "bugs": {
@@ -43,8 +56,8 @@
   },
   "dependencies": {
     "lodash.throttle": "^4.1.1",
+    "prop-types": "^15.8.1",
     "react-color-eye-dropper": "^1.0.1",
-    "tinycolor2": "^1.4.2",
-    "prop-types": "^15.8.1"
+    "tinycolor2": "^1.4.2"
   }
 }
