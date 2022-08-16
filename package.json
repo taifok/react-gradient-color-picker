@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "prepare": "yarn run build || npm run build",
+    "prepack": "yarn run build",
     "build": "babel src --out-dir lib --copy-files"
   },
   "repository": {
